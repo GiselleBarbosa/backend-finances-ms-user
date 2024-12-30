@@ -1,0 +1,34 @@
+spring:
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/financesuserdb
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      mode: always
+
+  flyway:
+    enabled: true
+    url: jdbc:mysql://localhost:3306/financesuserdb
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    schemas: financesuserdb
+    user: root
+    password: 123456
+
+
+
