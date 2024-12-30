@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -22,6 +24,11 @@ public class UserController {
     @GetMapping("/search")
     public ResponseEntity<User> findByEmail(@RequestParam String email) {
         return ResponseEntity.ok(service.findByEmail(email));
+    }
+
+    @GetMapping
+    public List<User> findAll() {
+        return service.findAll();
     }
 
     @PostMapping
