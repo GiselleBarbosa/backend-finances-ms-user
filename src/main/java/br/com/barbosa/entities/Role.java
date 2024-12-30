@@ -21,12 +21,15 @@ public class Role implements Serializable {
     public Role() {
     }
 
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
+
     public Role(Long id, String roleName) {
         super();
         this.id = id;
         this.roleName = roleName;
     }
-
 
     public Long getId() {
         return id;
