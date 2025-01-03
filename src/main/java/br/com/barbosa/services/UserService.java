@@ -3,6 +3,7 @@ package br.com.barbosa.services;
 import br.com.barbosa.entities.Role;
 import br.com.barbosa.entities.User;
 import br.com.barbosa.exceptions.EmailAlreadyExistsException;
+import br.com.barbosa.exceptions.ResourceNotFoundException;
 import br.com.barbosa.repositories.RoleRepository;
 import br.com.barbosa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,7 @@ public class UserService {
 
     public User findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
-    }
-
-    public User findByEmail(String email) {
-        return repository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
     }
 
     public List<User> findAll() {

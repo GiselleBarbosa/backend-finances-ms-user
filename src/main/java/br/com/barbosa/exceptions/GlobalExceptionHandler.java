@@ -12,7 +12,6 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Exceção personalizada para e-mails já existentes
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
         Map<String, String> response = new HashMap<>();
@@ -22,7 +21,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // Captura exceções de integridade do banco (como violação de unicidade)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         Map<String, String> response = new HashMap<>();
@@ -32,7 +30,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    // Exceção genérica
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
         Map<String, String> response = new HashMap<>();
@@ -40,5 +37,14 @@ public class GlobalExceptionHandler {
         response.put("error", "InternalServerError");
         response.put("status", "500");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("error", "ResourceNotFound");
+        response.put("status", "404");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }

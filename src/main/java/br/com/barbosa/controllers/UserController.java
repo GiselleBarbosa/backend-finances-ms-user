@@ -21,11 +21,6 @@ public class UserController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<User> findByEmail(@RequestParam String email) {
-        return ResponseEntity.ok(service.findByEmail(email));
-    }
-
     @GetMapping
     public List<User> findAll() {
         return service.findAll();
