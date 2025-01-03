@@ -47,4 +47,14 @@ public class GlobalExceptionHandler {
         response.put("status", "404");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.");
+        response.put("error", "InternalServerError");
+        response.put("status", "500");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 }
+

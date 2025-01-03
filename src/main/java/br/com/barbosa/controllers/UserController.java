@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -27,8 +30,21 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody User user) {
         User createdUser = service.create(user);
-        return ResponseEntity.ok(createdUser);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Usuário criado com sucesso.");
+        response.put("user", createdUser);
+
+        return ResponseEntity
+                .created(URI.create("/users/" + createdUser.getId()))
+                .body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

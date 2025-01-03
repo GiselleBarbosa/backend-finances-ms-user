@@ -47,4 +47,9 @@ public class UserService {
         return repository.save(user);
     }
 
+    public void deleteById(Long id) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
+        repository.delete(user);
+    }
 }
