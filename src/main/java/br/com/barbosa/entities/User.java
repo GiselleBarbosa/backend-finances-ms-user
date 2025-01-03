@@ -18,12 +18,12 @@ public class User {
     private Long id;
 
     @NotBlank(message = "O nome é obrigatório")
-    @Column(unique = true)
     @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres")
     private String name;
 
     @NotBlank(message = "O email é obrigatório")
     @Email(message = "O email deve ser válido")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "A senha é obrigatória")

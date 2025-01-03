@@ -1,6 +1,8 @@
 package br.com.barbosa.services;
+
 import br.com.barbosa.entities.Role;
 import br.com.barbosa.entities.User;
+import br.com.barbosa.exceptions.EmailAlreadyExistsException;
 import br.com.barbosa.repositories.RoleRepository;
 import br.com.barbosa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,10 @@ public class UserService {
     }
 
     public User create(User user) {
+        if (repository.findByEmail(user.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("O e-mail informado já está cadastrado. Por favor, utilize outro e-mail.");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByRoleName("ROLE_USER")
@@ -44,4 +50,5 @@ public class UserService {
 
         return repository.save(user);
     }
+
 }
