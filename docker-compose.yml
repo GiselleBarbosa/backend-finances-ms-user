@@ -1,16 +1,19 @@
-version: '3.8'
-
 services:
-  mysql-db:
-    image: mysql:8.0
-    container_name: mysql-db
+
+  postgres-db:
+    image: postgres:13-alpine
+    container_name: postgres-db
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: financesuserdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: financesuserdb
+
     ports:
-      - "3306:3306"
+      - "5432:5432"
+
     volumes:
-      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  mysql-data:
+  postgres-data:

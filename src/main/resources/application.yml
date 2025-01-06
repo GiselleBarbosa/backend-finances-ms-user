@@ -1,12 +1,15 @@
 spring:
-  profiles:
-    active: dev
 
-  flyway:
-    locations: classpath:db/migration
-    enabled: true
-    baseline-on-migrate: true
-    validate-on-migrate: false
-    schemas: financesuserdb
-    user: root
+  datasource:
+    url: jdbc:postgresql://localhost:5432/financesuserdb
+    username: postgres
     password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+
