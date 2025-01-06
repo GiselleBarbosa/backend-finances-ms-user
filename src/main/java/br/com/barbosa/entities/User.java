@@ -5,17 +5,23 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_users")
-public class User {
+public class User implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres")
@@ -27,13 +33,12 @@ public class User {
     private String email;
 
     @NotBlank(message = "A senha é obrigatória")
-    @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres")
     private String password;
 
     public User() {
     }
 
-    public User(Long id, String name, String email, String password) {
+    public User(UUID id, String name, String email, String password) {
         super();
         this.id = id;
         this.name = name;
@@ -41,7 +46,6 @@ public class User {
         this.password = password;
         this.roles = new HashSet<>();
     }
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -56,11 +60,11 @@ public class User {
         return roles;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
