@@ -5,8 +5,8 @@ services:
     container_name: postgres-db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: financesuserdb
+      POSTGRES_PASSWORD: 1234567
+      POSTGRES_DB: financesuserdbdev
 
     ports:
       - "5432:5432"

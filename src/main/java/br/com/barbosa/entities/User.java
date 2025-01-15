@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -37,6 +38,12 @@ public class User implements Serializable {
     @NotBlank(message = "A senha é obrigatória")
     private String password;
 
+    @Column(name = "criado_em", updatable = false)
+    private LocalDateTime criadoEm;
+
+    @Column(name = "atualizado_em")
+    private LocalDateTime atualizadoEm;
+
     public User() {
     }
 
@@ -55,8 +62,18 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-
     private Set<Role> roles = new HashSet<>();
+
+    @PrePersist
+    protected void onCreate() {
+        this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.atualizadoEm = LocalDateTime.now();
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -75,7 +92,7 @@ public class User implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getEmail() {
@@ -83,7 +100,7 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getPassword() {
@@ -94,15 +111,25 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return criadoEm;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return atualizadoEm;
+    }
+
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password);
+        return Objects.hash(id);
     }
+
 }

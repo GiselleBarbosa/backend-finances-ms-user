@@ -1,5 +1,6 @@
 package br.com.barbosa.controllers;
 
+import br.com.barbosa.dtos.UpdateUserRequestDTO;
 import br.com.barbosa.entities.User;
 import br.com.barbosa.services.UserService;
 import jakarta.validation.Valid;
@@ -41,6 +42,17 @@ public class UserController {
         return ResponseEntity
                 .created(URI.create("/users/" + createdUser.getId()))
                 .body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> update(@PathVariable UUID id, @Valid @RequestBody UpdateUserRequestDTO userDTO) {
+        User updatedUser = service.update(id, userDTO);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Usuário atualizado com sucesso.");
+        response.put("user", updatedUser);
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
