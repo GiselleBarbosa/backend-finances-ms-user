@@ -1,10 +1,16 @@
 package br.com.barbosa.entities;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,18 +18,15 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_users")
+@Document(collection = "users")
 public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String id;
 
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres")
@@ -32,22 +35,24 @@ public class User implements Serializable {
 
     @NotBlank(message = "O email é obrigatório")
     @Email(message = "O email deve ser válido")
-    @Column(unique = true)
+    @Indexed(unique = true)
     private String email;
 
     @NotBlank(message = "A senha é obrigatória")
     private String password;
 
-    @Column(name = "criado_em", updatable = false)
+    @Field("criadoEm")
+    @CreatedDate
     private LocalDateTime criadoEm;
 
-    @Column(name = "atualizado_em")
+    @Field("atualizadoEm")
+    @LastModifiedDate
     private LocalDateTime atualizadoEm;
 
     public User() {
     }
 
-    public User(UUID id, String name, String email, String password) {
+    public User(String id, String name, String email, String password) {
         super();
         this.id = id;
         this.name = name;
@@ -56,21 +61,14 @@ public class User implements Serializable {
         this.roles = new HashSet<>();
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tb_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+    @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    @PrePersist
     protected void onCreate() {
         this.criadoEm = LocalDateTime.now();
         this.atualizadoEm = LocalDateTime.now();
     }
 
-    @PreUpdate
     protected void onUpdate() {
         this.atualizadoEm = LocalDateTime.now();
     }
@@ -79,11 +77,11 @@ public class User implements Serializable {
         return roles;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -131,5 +129,4 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }
