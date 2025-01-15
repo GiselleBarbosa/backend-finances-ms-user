@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -27,7 +26,7 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public User findById(UUID id) {
+    public User findById(String id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
     }
@@ -52,7 +51,7 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User update(UUID id, UpdateUserRequestDTO dto) {
+    public User update(String id, UpdateUserRequestDTO dto) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
 
@@ -75,7 +74,7 @@ public class UserService {
         }
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
 

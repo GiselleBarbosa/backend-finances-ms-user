@@ -1,22 +1,23 @@
 package br.com.barbosa.entities;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_role")
+@Document(collection = "roles")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String id;
 
-    @Column(unique = true)
+    @Field("roleName")
+    @Indexed(unique = true)
     private String roleName;
 
     public Role() {
@@ -26,17 +27,17 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public Role(UUID id, String roleName) {
+    public Role(String id, String roleName) {
         super();
         this.id = id;
         this.roleName = roleName;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.lang.String;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -22,7 +22,7 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable UUID id) {
+    public ResponseEntity<User> findById(@PathVariable String id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> update(@PathVariable UUID id, @Valid @RequestBody UpdateUserRequestDTO userDTO) {
+    public ResponseEntity<Map<String, Object>> update(@PathVariable String id, @Valid @RequestBody UpdateUserRequestDTO userDTO) {
         User updatedUser = service.update(id, userDTO);
 
         Map<String, Object> response = new HashMap<>();
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
