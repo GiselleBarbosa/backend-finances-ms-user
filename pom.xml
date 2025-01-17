@@ -16,7 +16,12 @@
 
     <properties>
         <java.version>21</java.version>
+        <ADMIN_EMAIL>${admin.email}</ADMIN_EMAIL>
+        <ADMIN_PASSWORD>${admin.password}</ADMIN_PASSWORD>
+        <MONGO_USERNAME>${mongo.username}</MONGO_USERNAME>
+        <MONGO_PASSWORD>${mongo.password}</MONGO_PASSWORD>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -36,17 +41,9 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
