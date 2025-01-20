@@ -4,6 +4,8 @@ import br.com.barbosa.entities.Role;
 import br.com.barbosa.entities.User;
 import br.com.barbosa.repositories.RoleRepository;
 import br.com.barbosa.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -15,14 +17,18 @@ import java.util.Optional;
 @Configuration
 public class DataInitializer {
 
-    @Value("${admin.email}")
+    @Value("${admin-credentials.email}")
     private String adminEmail;
 
-    @Value("${admin.password}")
+    @Value("${admin-credentials.password}")
     private String adminPassword;
+
+    Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
     @Bean
     public CommandLineRunner initUsersAndRoles(RoleRepository roleRepository, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+        logger.info("adminEmail: " + adminEmail);
+        logger.info("adminPassword: " + adminPassword);
 
         return args -> {
             if (roleRepository.count() == 0) {

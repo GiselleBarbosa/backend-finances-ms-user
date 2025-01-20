@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  finances-ms-user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: finances-ms-user:0.0.1-SNAPSHOT
+    container_name: finances-ms-user
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    env_file:
+      - .env
