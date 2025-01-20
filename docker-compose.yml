@@ -1,19 +1,15 @@
+version: '3.8'
+
 services:
-
-  postgres-db:
-    image: postgres:13-alpine
-    container_name: postgres-db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234567
-      POSTGRES_DB: financesuserdbdev
-
+  finances-ms-user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: finances-ms-user:0.0.1-SNAPSHOT
+    container_name: finances-ms-user
     ports:
-      - "5432:5432"
-
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - postgres-data:/var/lib/postgresql/data
-
-volumes:
-  postgres-data:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    env_file:
+      - .env
