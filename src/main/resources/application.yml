@@ -10,3 +10,6 @@ spring:
 admin-credentials:
   email: ${ADMIN_EMAIL}
   password: ${ADMIN_PASSWORD}
+
+server:
+  port: 8100
