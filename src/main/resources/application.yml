@@ -5,8 +5,11 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@finances.ol6kb.mongodb.net/?retryWrites=true&w=majority&appName=finances
-      database: financesdb
+      database: financesdbdev
 
 admin-credentials:
   email: ${ADMIN_EMAIL}
   password: ${ADMIN_PASSWORD}
+
+server:
+  port: 8100
