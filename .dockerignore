@@ -3,15 +3,8 @@
 *.key
 *.pem
 
-# Ignorar arquivos gerados por builds
-target/
-build/
-.mvn/
-!target/finances-ms-user-0.0.1-SNAPSHOT.jar
-
 # Ignorar arquivos de controle de versão
 .git
-.gitignore
 
 # Ignorar IDEs e ambientes de desenvolvimento
 *.iml

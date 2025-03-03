@@ -1,4 +1,24 @@
 FROM amazoncorretto:21
-ARG JAR_FILE=target/finances-ms-user-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+WORKDIR /app
+
+COPY pom.xml ./
+COPY mvnw ./
+COPY .mvn .mvn
+COPY src ./src
+
+RUN ls -l mvnw
+
+RUN chmod +x mvnw
+
+RUN yum install -y tar gzip
+
+RUN ./mvnw clean package -DskipTests
+
+RUN ls -l target/
+
+COPY target/finances-ms-user-0.0.1-SNAPSHOT.jar app.jar
+
+RUN bash -c 'touch /app.jar'
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
