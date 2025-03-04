@@ -13,11 +13,24 @@ RUN chmod +x mvnw
 
 RUN yum install -y tar gzip
 
+ARG BUILD_DATE
+RUN echo "Build date: $BUILD_DATE"
+RUN printenv BUILD_DATE
+
+# Adicionando esta linha para forçar a reconstrução
+RUN touch src/main/java/com/example/financesmsuser/FinancesMsUserApplication.java
+
+RUN java -version
+RUN ./mvnw -version
+
 RUN ./mvnw clean package -DskipTests
 
 RUN ls -l target/
+RUN ls -l
 
 COPY target/finances-ms-user-0.0.1-SNAPSHOT.jar app.jar
+
+RUN ls -l
 
 RUN bash -c 'touch /app.jar'
 

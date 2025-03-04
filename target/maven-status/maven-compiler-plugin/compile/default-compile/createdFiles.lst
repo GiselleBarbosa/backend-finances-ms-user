@@ -1,0 +1,14 @@
+br\com\barbosa\FinancesMsUserApplication.class
+br\com\barbosa\controllers\UserController.class
+br\com\barbosa\exceptions\EmailAlreadyExistsException.class
+br\com\barbosa\dtos\UpdateUserRequestDTO.class
+br\com\barbosa\repositories\RoleRepository.class
+br\com\barbosa\entities\User.class
+br\com\barbosa\exceptions\PasswordValidationException.class
+br\com\barbosa\config\AppConfig.class
+br\com\barbosa\repositories\UserRepository.class
+br\com\barbosa\config\DataInitializer.class
+br\com\barbosa\exceptions\GlobalExceptionHandler.class
+br\com\barbosa\services\UserService.class
+br\com\barbosa\exceptions\ResourceNotFoundException.class
+br\com\barbosa\entities\Role.class

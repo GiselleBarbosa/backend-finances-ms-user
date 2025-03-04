@@ -1,8 +1,5 @@
 # Arquivos de ajuda e metadados de build
 HELP.md
-!**/src/main/**/target/
-!**/src/test/**/target/
-
 # Maven e dependências
 .mvn/
 !**/.mvn/wrapper/maven-wrapper.jar
