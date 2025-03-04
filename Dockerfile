@@ -14,6 +14,9 @@ RUN chmod +x mvnw
 
 RUN yum install -y tar gzip
 
+ARG BUILD_DATE
+RUN echo "Build date: $BUILD_DATE"
+
 RUN ./mvnw clean package -DskipTests
 
 RUN ls -l target/
