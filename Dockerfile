@@ -13,7 +13,7 @@ RUN chmod +x mvnw
 
 RUN yum install -y tar gzip
 
-ARG BUILD_DATE
+ENV BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 RUN echo "Build date: $BUILD_DATE"
 RUN printenv BUILD_DATE
 
