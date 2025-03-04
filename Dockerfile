@@ -15,7 +15,7 @@ RUN yum install -y tar gzip
 
 RUN ./mvnw clean package -DskipTests
 
-RUN ls -l target/finances-ms-user-0.0.1-SNAPSHOT.jar  app.jar
+RUN ls -l target/finances-ms-user-0.0.1-SNAPSHOT.jar app.jar
 
 COPY target/ app.jar
 
