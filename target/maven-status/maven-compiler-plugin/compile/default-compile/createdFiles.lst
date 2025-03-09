@@ -9,6 +9,7 @@ br\com\barbosa\config\AppConfig.class
 br\com\barbosa\repositories\UserRepository.class
 br\com\barbosa\config\DataInitializer.class
 br\com\barbosa\exceptions\GlobalExceptionHandler.class
+br\com\barbosa\dtos\UserResponseDTO.class
 br\com\barbosa\services\UserService.class
 br\com\barbosa\exceptions\ResourceNotFoundException.class
 br\com\barbosa\entities\Role.class

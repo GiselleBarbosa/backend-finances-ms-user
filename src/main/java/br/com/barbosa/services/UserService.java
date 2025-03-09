@@ -1,6 +1,7 @@
 package br.com.barbosa.services;
 
 import br.com.barbosa.dtos.UpdateUserRequestDTO;
+import br.com.barbosa.dtos.UserResponseDTO;
 import br.com.barbosa.entities.Role;
 import br.com.barbosa.entities.User;
 import br.com.barbosa.exceptions.EmailAlreadyExistsException;
@@ -26,13 +27,16 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public User findById(String id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
+    public List<UserResponseDTO> findAll() {
+        return repository.findAll().stream()
+                .map(UserResponseDTO::fromEntity)
+                .toList();
     }
 
-    public List<User> findAll() {
-        return repository.findAll();
+    public UserResponseDTO findById(String id) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
+        return UserResponseDTO.fromEntity(user);
     }
 
     public User create(User user) {
