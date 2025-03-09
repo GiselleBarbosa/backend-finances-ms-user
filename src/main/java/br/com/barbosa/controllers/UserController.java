@@ -1,6 +1,7 @@
 package br.com.barbosa.controllers;
 
 import br.com.barbosa.dtos.UpdateUserRequestDTO;
+import br.com.barbosa.dtos.UserResponseDTO;
 import br.com.barbosa.entities.User;
 import br.com.barbosa.services.UserService;
 import jakarta.validation.Valid;
@@ -21,14 +22,14 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable String id) {
-        return ResponseEntity.ok(service.findById(id));
+    @GetMapping
+    public List<UserResponseDTO> findAll() {
+        return service.findAll();
     }
 
-    @GetMapping
-    public List<User> findAll() {
-        return service.findAll();
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
