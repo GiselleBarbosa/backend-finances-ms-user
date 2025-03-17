@@ -32,6 +32,11 @@ public class UserController {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<User> findByIdAdmin(@PathVariable String id) {
+        return ResponseEntity.ok(service.findByIdAdmin(id));
+    }
+
     @PostMapping
     public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody User user) {
         User createdUser = service.create(user);
