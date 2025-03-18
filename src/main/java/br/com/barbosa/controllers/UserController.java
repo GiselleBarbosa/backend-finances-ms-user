@@ -26,6 +26,11 @@ public class UserController {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<User> findByIdAdmin(@PathVariable String id) {
+        return ResponseEntity.ok(service.findByIdAdmin(id));
+    }
+
     @GetMapping
     public List<User> findAll() {
         return service.findAll();

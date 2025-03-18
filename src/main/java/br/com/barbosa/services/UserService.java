@@ -31,6 +31,12 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
     }
 
+    public User findByIdAdmin(String id) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
+        return user;
+    }
+
     public List<User> findAll() {
         return repository.findAll();
     }
