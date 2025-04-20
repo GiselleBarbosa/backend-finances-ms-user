@@ -1,6 +1,7 @@
 package br.com.barbosa.services;
 
 import br.com.barbosa.dtos.UpdateUserRequestDTO;
+import br.com.barbosa.dtos.UserResponseDTO;
 import br.com.barbosa.entities.Role;
 import br.com.barbosa.entities.User;
 import br.com.barbosa.exceptions.EmailAlreadyExistsException;
@@ -8,6 +9,8 @@ import br.com.barbosa.exceptions.PasswordValidationException;
 import br.com.barbosa.exceptions.ResourceNotFoundException;
 import br.com.barbosa.repositories.RoleRepository;
 import br.com.barbosa.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,19 +29,27 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public User findById(String id) {
-        return repository.findById(id)
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    public List<UserResponseDTO> findAll() {
+        List<UserResponseDTO> users = repository.findAll().stream()
+                .map(UserResponseDTO::fromEntity)
+                .toList();
+        logger.info("RETORNO DE USERS SERVICE: {}", users);
+        return users;
+
+    }
+
+    public UserResponseDTO findById(String id) {
+        User user = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
+        return UserResponseDTO.fromEntity(user);
     }
 
     public User findByIdAdmin(String id) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário com ID " + id + " não encontrado."));
         return user;
-    }
-
-    public List<User> findAll() {
-        return repository.findAll();
     }
 
     public User create(User user) {
